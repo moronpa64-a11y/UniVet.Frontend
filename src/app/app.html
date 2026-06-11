@@ -1,0 +1,19 @@
+<div class="app-container">
+  <!-- Layout con Sidebar (cuando NO es ruta de auth) -->
+  <ng-container *ngIf="!isAuthRoute">
+    <app-sidebar></app-sidebar>
+    <div class="main-content">
+      <main class="content-area">
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </div>
+  </ng-container>
+
+  <!-- Layout sin Sidebar (para login, registro, etc) -->
+  <ng-container *ngIf="isAuthRoute">
+    <main class="auth-layout">
+      <router-outlet></router-outlet>
+    </main>
+  </ng-container>
+</div>

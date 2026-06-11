@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="app-header">
+  <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()" aria-label="Abrir menú">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="app-brand">
+    <div class="app-brand__icon">🚀</div>
+    <div>
+      <h1>Uniremington</h1>
+      <p>Al Parque</p>
+    </div>
+  </div>
+
+  <span class="spacer"></span>
+
+  <nav class="app-nav">
+    <a mat-button routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+    <a mat-button routerLink="/beneficiarios" routerLinkActive="active">Beneficiarios</a>
+    <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+    <a mat-flat-button color="accent" routerLink="/crear-cuenta">Crear cuenta</a>
+  </nav>
+</mat-toolbar>

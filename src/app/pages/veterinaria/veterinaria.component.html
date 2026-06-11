@@ -1,0 +1,335 @@
+<div class="container-veterinaria">
+
+  <!-- ENCABEZADO -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="header-icon">
+        <mat-icon>medical_services</mat-icon>
+      </div>
+      <div>
+        <h1>Registros Veterinarios</h1>
+        <p>Historial clínico de pacientes y sus mascotas</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-stats">
+        <div class="stat-chip en-revision">
+          <mat-icon>pending</mat-icon>
+          <span>{{ totalEnRevision() }} En revisión</span>
+        </div>
+        <div class="stat-chip dado-alta">
+          <mat-icon>check_circle</mat-icon>
+          <span>{{ totalDadosAlta() }} Dados de alta</span>
+        </div>
+        <div class="stat-chip total">
+          <mat-icon>pets</mat-icon>
+          <span>{{ registros.length }} Total</span>
+        </div>
+      </div>
+      <button mat-raised-button class="btn-nuevo-paciente" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+        <mat-icon>add</mat-icon>
+        Nuevo Paciente
+      </button>
+    </div>
+  </div>
+
+  <!-- FORMULARIO (NUEVO / EDITAR) -->
+  <mat-card class="formulario-card" *ngIf="mostrarFormulario">
+    <div class="form-titulo">
+      <mat-icon>{{ modoEdicion ? 'edit' : 'add_circle' }}</mat-icon>
+      <span>{{ modoEdicion ? 'Editar Paciente' : 'Nuevo Paciente' }}</span>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- SECCIÓN 1: Datos del paciente -->
+      <div class="form-seccion">
+        <span class="form-seccion-label">Datos del Paciente</span>
+        <div class="form-fila">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Nombre del Dueño</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.usuario" placeholder="Ej: Juan García" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Nombre de la Mascota</mat-label>
+            <mat-icon matPrefix>pets</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.mascota" placeholder="Ej: Max" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Especie</mat-label>
+            <mat-icon matPrefix>cruelty_free</mat-icon>
+            <mat-select [(ngModel)]="nuevoRegistro.especie">
+              <mat-option *ngFor="let esp of especiesDisponibles" [value]="esp">{{ esp }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Raza</mat-label>
+            <mat-icon matPrefix>info</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.raza" placeholder="Ej: Labrador" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Fecha de Atención</mat-label>
+            <mat-icon matPrefix>calendar_today</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.fecha" placeholder="DD/MM/AAAA" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: Información clínica -->
+      <div class="form-seccion">
+        <span class="form-seccion-label">Información Clínica</span>
+        <div class="form-fila">
+          <mat-form-field appearance="outline" class="form-field form-field-wide">
+            <mat-label>Padecimiento</mat-label>
+            <mat-icon matPrefix>sick</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.padecimiento" placeholder="Ej: Infección dermatológica leve" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Medicamento</mat-label>
+            <mat-icon matPrefix>medication</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.medicamento" placeholder="Ej: Amoxicilina" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Dosis</mat-label>
+            <mat-icon matPrefix>vaccines</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.dosis" placeholder="Ej: 1 tableta cada 12h" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field form-field-sm">
+            <mat-label>Miligramos (mg)</mat-label>
+            <mat-icon matPrefix>science</mat-icon>
+            <input matInput type="number" [(ngModel)]="nuevoRegistro.miligramos" placeholder="500" min="0" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: Estado y seguimiento -->
+      <div class="form-seccion">
+        <span class="form-seccion-label">Estado y Seguimiento</span>
+        <div class="form-fila form-fila-checks">
+          <div class="check-grupo">
+            <mat-checkbox [(ngModel)]="nuevoRegistro.enRevision" color="warn">
+              En Revisión
+            </mat-checkbox>
+          </div>
+          <div class="check-grupo">
+            <mat-checkbox [(ngModel)]="nuevoRegistro.dadoDeAlta" color="primary">
+              Dado de Alta
+            </mat-checkbox>
+          </div>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Próximo Control</mat-label>
+            <mat-icon matPrefix>event</mat-icon>
+            <input matInput [(ngModel)]="nuevoRegistro.proximoControl" placeholder="DD/MM/AAAA (opcional)" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 4: Observaciones -->
+      <div class="form-seccion">
+        <span class="form-seccion-label">Observaciones del Veterinario</span>
+        <mat-form-field appearance="outline" class="form-field form-field-full">
+          <mat-label>Observaciones</mat-label>
+          <mat-icon matPrefix>notes</mat-icon>
+          <textarea matInput [(ngModel)]="nuevoRegistro.observaciones"
+            placeholder="Notas clínicas, indicaciones especiales, evolución del paciente..."
+            rows="3"></textarea>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <!-- ACCIONES DEL FORMULARIO -->
+    <div class="form-acciones">
+      <button mat-stroked-button (click)="cancelarFormulario()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </button>
+      <button mat-raised-button class="btn-guardar" (click)="guardarRegistro()" [disabled]="!formularioValido()">
+        <mat-icon>save</mat-icon>
+        {{ modoEdicion ? 'Guardar Cambios' : 'Guardar' }}
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- LISTA DE REGISTROS -->
+  <div class="registros-grid">
+
+    <mat-card class="registro-card"
+      *ngFor="let reg of registros"
+      [class.en-revision]="reg.enRevision"
+      [class.dado-alta]="reg.dadoDeAlta"
+      [class.editando]="registroEditandoId === reg.id">
+
+      <!-- CABECERA DEL PACIENTE -->
+      <div class="paciente-header">
+        <div class="paciente-info">
+          <div class="avatar-paciente">
+            <mat-icon>{{ getEspecieIcon(reg.especie) }}</mat-icon>
+          </div>
+          <div class="datos-paciente">
+            <div class="nombre-usuario">
+              <mat-icon class="icon-sm">person</mat-icon>
+              <strong>{{ reg.usuario }}</strong>
+            </div>
+            <div class="datos-mascota">
+              <span class="mascota-nombre">
+                <mat-icon class="icon-sm">pets</mat-icon>
+                Mascota: <strong>{{ reg.mascota }}</strong>
+              </span>
+              <span class="separador">•</span>
+              <span class="mascota-raza">Raza: {{ reg.raza }}</span>
+              <span class="separador">•</span>
+              <span class="mascota-especie">Especie: {{ reg.especie }}</span>
+            </div>
+            <div class="fecha-atencion">
+              <mat-icon class="icon-sm">calendar_today</mat-icon>
+              Fecha de atención: <strong>{{ reg.fecha }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-acciones">
+          <span *ngIf="reg.dadoDeAlta" class="badge alta">
+            <mat-icon>check_circle</mat-icon>
+            Dado de Alta
+          </span>
+          <span *ngIf="reg.enRevision && !reg.dadoDeAlta" class="badge revision">
+            <mat-icon>pending</mat-icon>
+            En Revisión
+          </span>
+          <button mat-icon-button class="btn-editar"
+            (click)="editarRegistro(reg)"
+            matTooltip="Editar registro">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="btn-eliminar"
+            (click)="eliminarRegistro(reg)"
+            matTooltip="Eliminar registro">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- INFORMACIÓN MÉDICA -->
+      <div class="info-medica">
+        <h3 class="seccion-titulo">
+          <mat-icon>local_hospital</mat-icon>
+          Información Clínica
+        </h3>
+
+        <div class="campos-medicos">
+
+          <div class="campo-medico">
+            <div class="campo-label">
+              <mat-icon>sick</mat-icon>
+              Padecimiento
+            </div>
+            <div class="campo-valor padecimiento">{{ reg.padecimiento }}</div>
+          </div>
+
+          <div class="fila-campos">
+            <div class="campo-medico">
+              <div class="campo-label">
+                <mat-icon>medication</mat-icon>
+                Medicamento
+              </div>
+              <div class="campo-valor">{{ reg.medicamento }}</div>
+            </div>
+
+            <div class="campo-medico">
+              <div class="campo-label">
+                <mat-icon>vaccines</mat-icon>
+                Dosis
+              </div>
+              <div class="campo-valor">{{ reg.dosis }}</div>
+            </div>
+
+            <div class="campo-medico campo-mg">
+              <div class="campo-label">
+                <mat-icon>science</mat-icon>
+                Miligramos
+              </div>
+              <div class="campo-valor mg-badge">{{ reg.miligramos }} mg</div>
+            </div>
+          </div>
+
+          <div class="fila-campos">
+            <div class="campo-medico">
+              <div class="campo-label">
+                <mat-icon>monitor_heart</mat-icon>
+                Estado de Revisión
+              </div>
+              <div class="campo-valor">
+                <span *ngIf="reg.enRevision" class="estado-tag revision">
+                  <mat-icon>pending</mat-icon> Sigue en revisión
+                </span>
+                <span *ngIf="!reg.enRevision" class="estado-tag finalizado">
+                  <mat-icon>task_alt</mat-icon> Tratamiento finalizado
+                </span>
+              </div>
+            </div>
+
+            <div class="campo-medico" *ngIf="reg.proximoControl">
+              <div class="campo-label">
+                <mat-icon>event</mat-icon>
+                Próximo Control
+              </div>
+              <div class="campo-valor proximo-control">
+                <mat-icon class="icon-sm">calendar_month</mat-icon>
+                {{ reg.proximoControl }}
+              </div>
+            </div>
+
+            <div class="campo-medico">
+              <div class="campo-label">
+                <mat-icon>assignment_turned_in</mat-icon>
+                Alta Médica
+              </div>
+              <div class="campo-valor">
+                <span *ngIf="reg.dadoDeAlta" class="estado-tag alta">
+                  <mat-icon>check_circle</mat-icon> Dado de alta
+                </span>
+                <span *ngIf="!reg.dadoDeAlta" class="estado-tag no-alta">
+                  <mat-icon>schedule</mat-icon> Pendiente de alta
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- OBSERVACIONES -->
+          <div class="campo-medico observaciones-campo">
+            <div class="campo-label">
+              <mat-icon>notes</mat-icon>
+              Observaciones del Veterinario
+            </div>
+            <div class="campo-valor observaciones-texto">
+              <mat-icon class="quote-icon">format_quote</mat-icon>
+              {{ reg.observaciones }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </mat-card>
+
+  </div>
+
+  <!-- ESTADO VACÍO -->
+  <div *ngIf="registros.length === 0" class="empty-state">
+    <mat-icon>pets</mat-icon>
+    <h3>No hay registros veterinarios</h3>
+    <p>Haz clic en "Nuevo Paciente" para agregar el primer registro.</p>
+  </div>
+
+</div>

@@ -1,0 +1,603 @@
+.container-veterinaria {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===================== HEADER ===================== */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .header-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        color: white;
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    p {
+      margin: 2px 0 0;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===================== HEADER RIGHT ===================== */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.btn-nuevo-paciente {
+  background: #7c3aed !important;
+  color: white !important;
+  font-weight: 600;
+  padding: 0 20px;
+  height: 42px;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35) !important;
+  transition: box-shadow 0.2s, transform 0.1s;
+
+  mat-icon {
+    margin-right: 6px;
+  }
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5) !important;
+    transform: translateY(-1px);
+  }
+}
+
+/* ===================== FORMULARIO ===================== */
+.formulario-card {
+  border-radius: 14px !important;
+  border-left: 5px solid #7c3aed;
+  padding: 24px !important;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.12) !important;
+}
+
+.form-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #7c3aed;
+  margin-bottom: 24px;
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-seccion-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #94a3b8;
+}
+
+.form-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.form-field {
+  flex: 1 1 200px;
+  min-width: 180px;
+
+  &.form-field-wide {
+    flex: 2 1 300px;
+  }
+
+  &.form-field-sm {
+    flex: 0 1 140px;
+  }
+
+  &.form-field-full {
+    flex: 1 1 100%;
+  }
+
+  mat-icon[matPrefix] {
+    color: #a78bfa;
+    margin-right: 6px;
+  }
+}
+
+.form-fila-checks {
+  align-items: center;
+  gap: 20px;
+}
+
+.check-grupo {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  min-width: 150px;
+}
+
+.form-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+
+  .btn-guardar {
+    background: #7c3aed !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0 24px;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+
+    &:disabled {
+      background: #c4b5fd !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &.en-revision {
+    background: #fef3c7;
+    color: #d97706;
+  }
+
+  &.dado-alta {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  &.total {
+    background: #ede9fe;
+    color: #7c3aed;
+  }
+}
+
+/* ===================== CARDS ===================== */
+.registros-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.registro-card {
+  border-radius: 14px !important;
+  border-left: 5px solid #e2e8f0;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13) !important;
+  }
+
+  &.en-revision {
+    border-left-color: #f59e0b;
+  }
+
+  &.dado-alta {
+    border-left-color: #10b981;
+  }
+}
+
+/* ===================== CABECERA PACIENTE ===================== */
+.paciente-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  background: #f8fafc;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-acciones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-editar {
+  color: #7c3aed !important;
+
+  &:hover {
+    background: #ede9fe !important;
+  }
+}
+
+.btn-eliminar {
+  color: #ef4444 !important;
+
+  &:hover {
+    background: #fee2e2 !important;
+  }
+}
+
+.registro-card.editando {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+.paciente-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.avatar-paciente {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    color: white;
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.datos-paciente {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nombre-usuario {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.05rem;
+  color: #1e293b;
+
+  mat-icon {
+    color: #7c3aed;
+  }
+}
+
+.datos-mascota {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: #475569;
+
+  .mascota-nombre {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+
+  .separador {
+    color: #cbd5e1;
+  }
+}
+
+.fecha-atencion {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.83rem;
+  color: #64748b;
+
+  mat-icon {
+    color: #94a3b8;
+  }
+}
+
+.icon-sm {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* ===================== BADGES DE ESTADO ===================== */
+.estado-badge {
+  flex-shrink: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.alta {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  &.revision {
+    background: #fef3c7;
+    color: #d97706;
+  }
+}
+
+/* ===================== INFORMACIÓN MÉDICA ===================== */
+.info-medica {
+  padding: 20px 24px 24px;
+}
+
+.seccion-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7c3aed;
+  margin: 0 0 16px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.campos-medicos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fila-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.campo-medico {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    color: #a78bfa;
+  }
+}
+
+.campo-valor {
+  font-size: 0.9rem;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  line-height: 1.5;
+
+  &.padecimiento {
+    font-style: italic;
+    border-left: 3px solid #f59e0b;
+    background: #fffbeb;
+    color: #92400e;
+  }
+
+  &.mg-badge {
+    font-weight: 700;
+    color: #7c3aed;
+    background: #ede9fe;
+    text-align: center;
+  }
+
+  &.proximo-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+  }
+}
+
+.estado-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.revision {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  &.finalizado {
+    background: #f0fdf4;
+    color: #16a34a;
+  }
+
+  &.alta {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  &.no-alta {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+}
+
+/* ===================== OBSERVACIONES ===================== */
+.observaciones-campo {
+  margin-top: 4px;
+}
+
+.observaciones-texto {
+  position: relative;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px !important;
+  padding: 14px 16px 14px 36px !important;
+  font-style: italic;
+  color: #475569 !important;
+  line-height: 1.6;
+
+  .quote-icon {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #cbd5e1;
+  }
+}
+
+/* ===================== EMPTY STATE ===================== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    color: #64748b;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .container-veterinaria {
+    padding: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .paciente-header {
+    flex-direction: column;
+  }
+
+  .fila-campos {
+    grid-template-columns: 1fr;
+  }
+}

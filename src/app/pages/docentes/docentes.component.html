@@ -1,0 +1,82 @@
+<div class="container-docentes">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Gestión de Docentes</mat-card-title>
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+        <mat-icon>add</mat-icon> Nuevo Docente
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="mostrarFormulario" class="formulario-card">
+        <h3>{{ modoEdicion ? 'Editar Docente' : 'Nuevo Docente' }}</h3>
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre Completo</mat-label>
+            <input matInput formControlName="nombre" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Documento</mat-label>
+            <input matInput formControlName="documento" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Especialidad</mat-label>
+            <input matInput formControlName="especialidad" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="telefono" />
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button type="button" (click)="cerrarFormulario()">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="loading">Guardar</button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="!mostrarFormulario" class="tabla-container">
+        <table mat-table [dataSource]="docentes" class="mat-elevation-z2">
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let docente">{{ docente.nombre }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let docente">{{ docente.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="especialidad">
+            <th mat-header-cell *matHeaderCellDef>Especialidad</th>
+            <td mat-cell *matCellDef="let docente">{{ docente.especialidad }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef>Documento</th>
+            <td mat-cell *matCellDef="let docente">{{ docente.documento }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let docente">
+              <button mat-icon-button color="primary" (click)="editarDocente(docente)"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="eliminarDocente(docente)"><mat-icon>delete</mat-icon></button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,229 @@
+.sidebar {
+  width: 270px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* HEADER / LOGO */
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .logo-icon {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+      color: #60a5fa;
+    }
+
+    .logo-text {
+      h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #f1f5f9;
+        line-height: 1.2;
+      }
+      span {
+        font-size: 12px;
+        color: #94a3b8;
+      }
+    }
+  }
+}
+
+/* USER CARD */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(96, 165, 250, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  .user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    mat-icon {
+      color: white;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .user-info {
+    flex: 1;
+    min-width: 0;
+
+    strong {
+      display: block;
+      font-size: 13px;
+      color: #f1f5f9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.role-admin {
+        background: #ef4444;
+        color: white;
+      }
+      &.role-teacher {
+        background: #3b82f6;
+        color: white;
+      }
+      &.role-student {
+        background: #10b981;
+        color: white;
+      }
+      &.role-veterinarian {
+        background: #8b5cf6;
+        color: white;
+      }
+      &.role-user {
+        background: #f59e0b;
+        color: white;
+      }
+    }
+  }
+}
+
+/* MENÚ */
+.sidebar-menu {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+
+    .menu-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      color: #94a3b8;
+      transition: color 0.2s;
+    }
+
+    .menu-label {
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .menu-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    &:hover {
+      background: rgba(96, 165, 250, 0.1);
+      color: #f1f5f9;
+
+      .menu-icon {
+        color: #60a5fa;
+      }
+    }
+
+    &.active {
+      background: rgba(96, 165, 250, 0.15);
+      color: #60a5fa;
+      border-left-color: #60a5fa;
+
+      .menu-icon {
+        color: #60a5fa;
+      }
+    }
+  }
+}
+
+/* FOOTER */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  button {
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    color: #f1f5f9 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+
+    mat-icon {
+      margin-right: 0 !important;
+    }
+
+    &.btn-login:hover {
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    &.btn-logout:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #fca5a5 !important;
+    }
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}

@@ -1,0 +1,148 @@
+<div class="container-usuarios">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="title-icon">manage_accounts</mat-icon>
+        Gestión de Usuarios
+      </mat-card-title>
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+        <mat-icon>person_add</mat-icon>
+        Nuevo Usuario
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Formulario -->
+      <div *ngIf="mostrarFormulario" class="formulario-card">
+        <h3>
+          <mat-icon>{{ modoEdicion ? 'edit' : 'add_circle' }}</mat-icon>
+          {{ modoEdicion ? 'Editar Usuario' : 'Nuevo Usuario' }}
+        </h3>
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre Completo</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="fullName" />
+            <mat-error *ngIf="form.get('fullName')?.hasError('required')">Campo requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput type="email" formControlName="email" />
+            <mat-error *ngIf="form.get('email')?.hasError('required')">Campo requerido</mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="!modoEdicion">
+            <mat-label>Contraseña</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput type="password" formControlName="password" />
+            <mat-error *ngIf="form.get('password')?.hasError('required')">Campo requerido</mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-icon matPrefix>verified_user</mat-icon>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let r of roleOptions" [value]="r.value">
+                <mat-icon>{{ r.icon }}</mat-icon>
+                <span style="margin-left: 8px;">{{ r.label }}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Documento (DNI)</mat-label>
+            <mat-icon matPrefix>badge</mat-icon>
+            <input matInput formControlName="dni" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Facultad</mat-label>
+            <mat-icon matPrefix>account_balance</mat-icon>
+            <input matInput formControlName="faculty" />
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" (click)="cerrarFormulario()">
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+              <mat-icon>save</mat-icon>
+              {{ loading ? 'Guardando...' : 'Guardar' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabla -->
+      <div *ngIf="!mostrarFormulario" class="tabla-container">
+        <table mat-table [dataSource]="usuarios" class="mat-elevation-z2">
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-icon>person</mat-icon> Nombre
+            </th>
+            <td mat-cell *matCellDef="let usuario">{{ usuario.fullName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-icon>email</mat-icon> Email
+            </th>
+            <td mat-cell *matCellDef="let usuario">{{ usuario.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-icon>verified_user</mat-icon> Rol
+            </th>
+            <td mat-cell *matCellDef="let usuario">
+              <span class="badge-rol" [class]="'badge-' + usuario.role.toLowerCase()">
+                <mat-icon>{{ getRoleIcon(usuario.role) }}</mat-icon>
+                {{ getRoleLabel(usuario.role) }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-icon>toggle_on</mat-icon> Estado
+            </th>
+            <td mat-cell *matCellDef="let usuario">
+              <mat-slide-toggle 
+                [checked]="usuario.isActive" 
+                (change)="cambiarEstado(usuario)"
+                color="primary"
+                matTooltip="Click para cambiar estado">
+                {{ usuario.isActive ? 'Activo' : 'Inactivo' }}
+              </mat-slide-toggle>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let usuario">
+              <button mat-icon-button color="primary" (click)="editarUsuario(usuario)" matTooltip="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="eliminarUsuario(usuario)" matTooltip="Eliminar">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div *ngIf="usuarios.length === 0 && !loading" class="empty-state">
+          <mat-icon>group_off</mat-icon>
+          <p>No hay usuarios registrados</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

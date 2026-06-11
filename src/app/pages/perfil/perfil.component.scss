@@ -1,0 +1,76 @@
+.container-perfil {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .avatar {
+    margin-bottom: 20px;
+
+    mat-icon {
+      font-size: 100px;
+      width: 100px;
+      height: 100px;
+      color: #1976d2;
+    }
+  }
+
+  .rol-badge {
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+
+    &.badge-admin {
+      background-color: #ff5722;
+      color: white;
+    }
+
+    &.badge-profe {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    &.badge-estudiante {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    &.badge-asistente {
+      background-color: #ff9800;
+      color: white;
+    }
+  }
+
+  .formulario-perfil {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+  }
+}

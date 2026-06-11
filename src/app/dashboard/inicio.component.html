@@ -1,0 +1,196 @@
+<!-- HERO SECTION - Mensaje personalizado según usuario -->
+<section class="hero-section">
+  <div class="hero-content">
+    <span class="eyebrow">
+      <mat-icon>auto_awesome</mat-icon>
+      UNIREMINGTON AL PARQUE
+    </span>
+    <h1>{{ welcomeMessage }}</h1>
+    <p *ngIf="isAuthenticated" class="role-display">
+      <mat-icon>verified_user</mat-icon>
+      Has ingresado como <strong>{{ userRoleLabel }}</strong>
+    </p>
+    <p class="hero-description">
+      Plataforma de gestión y comunicación del programa de proyección social de Uniremington. 
+      Mantente informado sobre eventos, noticias y participa en la comunidad educativa.
+    </p>
+    <div class="hero-actions">
+      <button mat-raised-button color="primary" routerLink="/noticias">
+        <mat-icon>campaign</mat-icon>
+        Ver Noticias
+      </button>
+      <button mat-stroked-button routerLink="/foros">
+        <mat-icon>forum</mat-icon>
+        Ir a Foros
+      </button>
+      <button *ngIf="!isAuthenticated" mat-raised-button color="accent" routerLink="/login">
+        <mat-icon>login</mat-icon>
+        Iniciar Sesión
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- INFORMACIÓN INSTITUCIONAL -->
+<section class="info-institucional">
+  <mat-card class="info-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="info-icon institutional">school</mat-icon>
+      <mat-card-title>¿Qué es Uniremington?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Una institución de educación superior comprometida con la formación integral de profesionales, fundamentada en valores humanos, responsabilidad social y excelencia académica.</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="info-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="info-icon parque">park</mat-icon>
+      <mat-card-title>¿Qué es Uniremington al Parque?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>El programa insignia de proyección social de la universidad, diseñado para acercar servicios institucionales, brigadas veterinarias, asesorías profesionales y eventos comunitarios directos a la población, liderado por docentes y estudiantes.</p>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<!-- ACCESOS RÁPIDOS POR ROL -->
+<section class="quick-access" *ngIf="isAuthenticated">
+  <h2 class="section-title">
+    <mat-icon>bolt</mat-icon>
+    Accesos Rápidos
+  </h2>
+  <div class="access-grid">
+    <!-- ADMIN y VETERINARIAN: Gestión de Usuarios -->
+    <a *ngIf="isAdmin || isVeterinarian" routerLink="/usuarios" class="access-card admin">
+      <mat-icon>manage_accounts</mat-icon>
+      <h3>Gestión de Usuarios</h3>
+      <p>Administra usuarios del sistema</p>
+    </a>
+    <!-- ADMIN y VETERINARIAN: Veterinaria -->
+    <a *ngIf="isAdmin || isVeterinarian" routerLink="/veterinaria" class="access-card vet">
+      <mat-icon>medical_services</mat-icon>
+      <h3>Veterinaria</h3>
+      <p>Registros clínicos de mascotas</p>
+    </a>
+    <a *ngIf="isAdmin || isTeacher" routerLink="/docentes" class="access-card teacher">
+      <mat-icon>school</mat-icon>
+      <h3>Docentes</h3>
+      <p>Ver docentes registrados</p>
+    </a>
+    <a *ngIf="isAdmin || isTeacher" routerLink="/estudiantes" class="access-card student">
+      <mat-icon>groups</mat-icon>
+      <h3>Usuarios</h3>
+      <p>Lista de estudiantes</p>
+    </a>
+    <a routerLink="/eventos" class="access-card event">
+      <mat-icon>event_available</mat-icon>
+      <h3>Eventos</h3>
+      <p>Jornadas y actividades</p>
+    </a>
+    <a routerLink="/foros" class="access-card forum">
+      <mat-icon>forum</mat-icon>
+      <h3>Foros</h3>
+      <p>Participa en discusiones</p>
+    </a>
+    <a routerLink="/perfil" class="access-card profile">
+      <mat-icon>account_circle</mat-icon>
+      <h3>Mi Perfil</h3>
+      <p>Datos personales</p>
+    </a>
+  </div>
+</section>
+
+<!-- ESTADÍSTICAS - Visible a todos -->
+<section class="stats-section">
+  <h2 class="section-title">
+    <mat-icon>insights</mat-icon>
+    Impacto del Programa
+  </h2>
+  <div class="stats-grid">
+    <mat-card class="stat-card stat-blue">
+      <mat-icon>people</mat-icon>
+      <div class="stat-info">
+        <span class="stat-label">Comunidad Activa</span>
+        <strong class="stat-value">{{ totalBeneficiarios }}</strong>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card stat-purple">
+      <mat-icon>event_available</mat-icon>
+      <div class="stat-info">
+        <span class="stat-label">Eventos Realizados</span>
+        <strong class="stat-value">{{ totalServicios }}</strong>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card stat-green">
+      <mat-icon>location_on</mat-icon>
+      <div class="stat-info">
+        <span class="stat-label">Cobertura Municipal</span>
+        <strong class="stat-value">{{ coberturaTerritorial }}</strong>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card stat-orange" *ngIf="isAdmin || isVeterinarian">
+      <mat-icon>pets</mat-icon>
+      <div class="stat-info">
+        <span class="stat-label">Mascotas Atendidas</span>
+        <strong class="stat-value">{{ totalMascotas }}</strong>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card stat-red" *ngIf="isAdmin || isVeterinarian">
+      <mat-icon>medical_services</mat-icon>
+      <div class="stat-info">
+        <span class="stat-label">Intervenciones</span>
+        <strong class="stat-value">{{ totalIntervenciones }}</strong>
+      </div>
+    </mat-card>
+  </div>
+</section>
+
+<!-- REPORTES VISUALES - SOLO ADMIN -->
+<section class="charts-section" *ngIf="isAdmin">
+  <h2 class="section-title">
+    <mat-icon>analytics</mat-icon>
+    Reportes y Estadísticas
+  </h2>
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Servicios por Categoría</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart 
+          [data]="serviciosChartData" 
+          [type]="serviciosChartType">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Cobertura Territorial</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart 
+          [data]="coberturaChartData" 
+          [type]="coberturaChartType">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Estado de Intervenciones</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart 
+          [data]="intervencionesChartData" 
+          [type]="intervencionesChartType">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

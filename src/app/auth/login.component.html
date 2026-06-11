@@ -1,0 +1,115 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <!-- Panel izquierdo: branding -->
+    <div class="auth-brand">
+      <div class="brand-content">
+        <mat-icon class="brand-logo">school</mat-icon>
+        <h1>Uniremington</h1>
+        <p class="brand-tagline">Portal Institucional al Parque</p>
+        <div class="brand-description">
+          <p>Plataforma de gestión del programa de proyección social</p>
+          <div class="brand-features">
+            <div class="feature">
+              <mat-icon>verified</mat-icon>
+              <span>Gestión integral de usuarios</span>
+            </div>
+            <div class="feature">
+              <mat-icon>event_available</mat-icon>
+              <span>Eventos y jornadas</span>
+            </div>
+            <div class="feature">
+              <mat-icon>forum</mat-icon>
+              <span>Foros y noticias</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel derecho: formulario -->
+    <mat-card class="auth-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>login</mat-icon>
+          Iniciar Sesión
+        </mat-card-title>
+        <mat-card-subtitle>Accede con tu correo institucional</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo electrónico</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput formControlName="email" type="email" placeholder="ejemplo@uniremington.edu.co" />
+            <mat-error *ngIf="form.controls.email.touched && form.controls.email.hasError('required')">
+              El correo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="form.controls.email.touched && form.controls.email.hasError('email')">
+              Ingresa un correo válido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput 
+                   formControlName="password" 
+                   [type]="showPassword ? 'text' : 'password'" 
+                   placeholder="********" />
+            <button mat-icon-button matSuffix type="button" (click)="togglePassword()" tabindex="-1">
+              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.controls.password.touched && form.controls.password.hasError('required')">
+              La contraseña es obligatoria
+            </mat-error>
+            <mat-error *ngIf="form.controls.password.touched && form.controls.password.hasError('minlength')">
+              Mínimo 6 caracteres
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" type="submit" class="full-width btn-submit" [disabled]="loading">
+            <mat-icon *ngIf="!loading">login</mat-icon>
+            <mat-icon *ngIf="loading" class="spinner">refresh</mat-icon>
+            {{ loading ? 'Validando...' : 'Ingresar' }}
+          </button>
+        </form>
+
+        <div class="auth-links">
+          <a routerLink="/recuperar-contrasena">
+            <mat-icon>help_outline</mat-icon>
+            ¿Olvidaste tu contraseña?
+          </a>
+          <a routerLink="/crear-cuenta">
+            <mat-icon>person_add</mat-icon>
+            Crear cuenta
+          </a>
+        </div>
+
+        <div class="auth-error" *ngIf="errorMessage">
+          <mat-icon>error_outline</mat-icon>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Panel de Demo (modo desarrollo) -->
+        <div class="demo-panel">
+          <div class="demo-header">
+            <mat-icon>science</mat-icon>
+            <span>Cuentas de Demostración</span>
+          </div>
+          <div class="demo-users">
+            <button *ngFor="let user of demoUsers" 
+                    type="button"
+                    class="demo-btn"
+                    [matTooltip]="user.email"
+                    [style.border-color]="user.color"
+                    (click)="fillDemo(user)">
+              <mat-icon [style.color]="user.color">{{ user.icon }}</mat-icon>
+              <span>{{ user.label }}</span>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="container-eventos">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Gestión de Eventos - Uniremington al Parque</mat-card-title>
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+        <mat-icon>add</mat-icon> Nuevo Evento
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="mostrarFormulario" class="formulario-card">
+        <h3>{{ modoEdicion ? 'Editar Evento' : 'Nuevo Evento' }}</h3>
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <mat-form-field appearance="outline">
+            <mat-label>Título del Evento</mat-label>
+            <input matInput formControlName="titulo" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion" rows="3"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput type="date" formControlName="fecha" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Lugar</mat-label>
+            <input matInput formControlName="lugar" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Organizador</mat-label>
+            <input matInput formControlName="organizador" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>URL de Imagen (opcional)</mat-label>
+            <input matInput formControlName="imagenUrl" />
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button type="button" (click)="cerrarFormulario()">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="loading">Guardar</button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="!mostrarFormulario" class="eventos-grid">
+        <mat-card *ngFor="let evento of eventos" class="evento-card">
+          <img *ngIf="evento.imagenUrl" [src]="evento.imagenUrl" class="evento-imagen" />
+          <mat-card-content>
+            <h3>{{ evento.titulo }}</h3>
+            <p><strong>Fecha:</strong> {{ evento.fecha | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
+            <p><strong>Tipo:</strong> <span class="badge">{{ evento.tipo }}</span></p>
+            <p>{{ evento.descripcion }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="editarEvento(evento)">Editar</button>
+            <button mat-button color="warn" (click)="eliminarEvento(evento)">Eliminar</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

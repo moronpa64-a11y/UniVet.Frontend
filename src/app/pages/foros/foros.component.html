@@ -1,0 +1,72 @@
+<div class="container-foros">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Foro de Discusión</mat-card-title>
+      <button mat-raised-button color="primary" (click)="abrirNuevoTema()" *ngIf="!mostrarNuevoTema && !temaSeleccionado">
+        <mat-icon>add</mat-icon> Nuevo Tema
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Formulario Nuevo Tema -->
+      <div *ngIf="mostrarNuevoTema" class="formulario-card">
+        <h3>Crear Nuevo Tema</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Título</mat-label>
+          <input matInput [(ngModel)]="nuevoTema.titulo" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contenido</mat-label>
+          <textarea matInput [(ngModel)]="nuevoTema.contenido" rows="5"></textarea>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button (click)="cerrarNuevoTema()">Cancelar</button>
+          <button mat-raised-button color="primary" (click)="guardarNuevoTema()">Publicar</button>
+        </div>
+      </div>
+
+      <!-- Detalle de Tema -->
+      <div *ngIf="temaSeleccionado" class="tema-detalle">
+        <button mat-icon-button (click)="cerrarTema()" class="btn-volver">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2>{{ temaSeleccionado.titulo }}</h2>
+        <p class="autor">Por {{ temaSeleccionado.autor }} - {{ temaSeleccionado.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p>{{ temaSeleccionado.contenido }}</p>
+
+        <div class="respuestas">
+          <h3>Respuestas ({{ temaSeleccionado.respuestas.length }})</h3>
+          <div *ngFor="let respuesta of temaSeleccionado.respuestas" class="respuesta-item">
+            <strong>{{ respuesta.autor }}</strong> - <small>{{ respuesta.fecha }}</small>
+            <p>{{ respuesta.contenido }}</p>
+          </div>
+        </div>
+
+        <div class="nueva-respuesta">
+          <h4>Responder</h4>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Tu respuesta</mat-label>
+            <textarea matInput [(ngModel)]="nuevaRespuesta" rows="3"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="enviarRespuesta()">Enviar Respuesta</button>
+        </div>
+      </div>
+
+      <!-- Lista de Temas -->
+      <div *ngIf="!mostrarNuevoTema && !temaSeleccionado" class="lista-temas">
+        <mat-card *ngFor="let foro of foros" class="tema-card" (click)="verTema(foro)">
+          <mat-card-content>
+            <h3>{{ foro.titulo }}</h3>
+            <p class="autor">Por {{ foro.autor }} - {{ foro.fecha | date:'dd/MM/yyyy' }}</p>
+            <p class="preview">{{ foro.contenido }}</p>
+            <span class="respuestas-count">
+              <mat-icon>comment</mat-icon> {{ foro.respuestas.length }} respuestas
+            </span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
