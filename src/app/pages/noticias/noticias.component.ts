@@ -43,8 +43,12 @@ export class NoticiasComponent implements OnInit {
 
   categorias = ['General', 'Educación', 'Salud', 'Comunidad', 'Veterinaria', 'Social'];
 
-  get isAdmin(): boolean {
+  get canCreate(): boolean {
     return this.authService.hasAnyRole(['ADMIN', 'TEACHER']);
+  }
+
+  get canEditDelete(): boolean {
+    return this.authService.isAdmin();
   }
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventoService } from '../../core/services/evento.service';
 import { Evento } from '../../core/models/evento';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-eventos',
@@ -24,7 +25,12 @@ import { Evento } from '../../core/models/evento';
 export class EventosComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly eventoService = inject(EventoService);
+  private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
   eventos: Evento[] = [];
   mostrarFormulario = false;

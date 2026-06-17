@@ -28,7 +28,7 @@ export const routes: Routes = [
     path: 'usuarios',
     component: UsuariosComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMIN', 'VETERINARIAN'] }
+    data: { roles: ['ADMIN'] }
   },
   {
     path: 'veterinaria',

@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Gestión de Eventos - Uniremington al Parque</mat-card-title>
-      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario && isAdmin">
         <mat-icon>add</mat-icon> Nuevo Evento
       </button>
     </mat-card-header>
@@ -65,7 +65,7 @@
             <p><strong>Tipo:</strong> <span class="badge">{{ evento.tipo }}</span></p>
             <p>{{ evento.descripcion }}</p>
           </mat-card-content>
-          <mat-card-actions>
+          <mat-card-actions *ngIf="isAdmin">
             <button mat-button color="primary" (click)="editarEvento(evento)">Editar</button>
             <button mat-button color="warn" (click)="eliminarEvento(evento)">Eliminar</button>
           </mat-card-actions>

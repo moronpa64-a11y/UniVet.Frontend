@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Gestión de Docentes</mat-card-title>
-      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="!mostrarFormulario && isAdmin">
         <mat-icon>add</mat-icon> Nuevo Docente
       </button>
     </mat-card-header>

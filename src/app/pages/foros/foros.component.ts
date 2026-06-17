@@ -27,6 +27,10 @@ export class ForosComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
 
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
   foros: Foro[] = [];
   mostrarNuevoTema = false;
   temaSeleccionado: Foro | null = null;

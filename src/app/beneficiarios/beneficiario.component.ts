@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BeneficiarioService } from '../core/services/beneficiario.service';
@@ -10,7 +11,7 @@ import { Beneficiario } from '../core/models/beneficiario';
 @Component({
   selector: 'app-beneficiario',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatCardModule, MatTableModule, MatPaginatorModule],
+  imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatTableModule, MatPaginatorModule],
   templateUrl: './beneficiario.component.html',
   styleUrls: ['./beneficiario.component.scss']
 })

@@ -2,13 +2,13 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Noticias - Uniremington</mat-card-title>
-      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="isAdmin && !mostrarFormulario">
+      <button mat-raised-button color="primary" (click)="abrirFormulario()" *ngIf="canCreate && !mostrarFormulario">
         <mat-icon>add</mat-icon> Publicar Noticia
       </button>
     </mat-card-header>
 
     <mat-card-content>
-      <div *ngIf="mostrarFormulario && isAdmin" class="formulario-card">
+      <div *ngIf="mostrarFormulario && canCreate" class="formulario-card">
         <h3>{{ modoEdicion ? 'Editar Noticia' : 'Nueva Noticia' }}</h3>
         <form [formGroup]="form" (ngSubmit)="guardar()">
           <mat-form-field appearance="outline">
@@ -49,7 +49,7 @@
             <p class="autor">Por {{ noticia.autor }} - {{ noticia.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
             <p>{{ noticia.contenido }}</p>
           </mat-card-content>
-          <mat-card-actions *ngIf="isAdmin">
+          <mat-card-actions *ngIf="canEditDelete">
             <button mat-button color="primary" (click)="editarNoticia(noticia)">Editar</button>
             <button mat-button color="warn" (click)="eliminarNoticia(noticia)">Eliminar</button>
           </mat-card-actions>

@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { EstudianteService } from '../../core/services/estudiante.service';
 import { Estudiante } from '../../core/models/estudiante';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-estudiantes',
@@ -26,6 +27,7 @@ import { Estudiante } from '../../core/models/estudiante';
 export class EstudiantesComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly estudianteService = inject(EstudianteService);
+  private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
 
   estudiantes: Estudiante[] = [];
@@ -34,7 +36,11 @@ export class EstudiantesComponent implements OnInit {
   estudianteEditando: Estudiante | null = null;
   loading = false;
 
-  displayedColumns: string[] = ['nombre', 'email', 'programa', 'semestre', 'documento', 'acciones'];
+  displayedColumns: string[] = [];
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
   form = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,6 +63,9 @@ export class EstudiantesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarEstudiantes();
+    this.displayedColumns = this.isAdmin
+      ? ['nombre', 'email', 'programa', 'semestre', 'documento', 'acciones']
+      : ['nombre', 'email', 'programa', 'semestre', 'documento'];
   }
 
   cargarEstudiantes(): void {

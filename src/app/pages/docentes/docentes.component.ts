@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { DocenteService } from '../../core/services/docente.service';
 import { Docente } from '../../core/models/docente';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-docentes',
@@ -24,6 +25,7 @@ import { Docente } from '../../core/models/docente';
 export class DocentesComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly docenteService = inject(DocenteService);
+  private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
 
   docentes: Docente[] = [];
@@ -32,7 +34,11 @@ export class DocentesComponent implements OnInit {
   docenteEditando: Docente | null = null;
   loading = false;
 
-  displayedColumns: string[] = ['nombre', 'email', 'especialidad', 'documento', 'acciones'];
+  displayedColumns: string[] = [];
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
   form = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -44,6 +50,9 @@ export class DocentesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarDocentes();
+    this.displayedColumns = this.isAdmin
+      ? ['nombre', 'email', 'especialidad', 'documento', 'acciones']
+      : ['nombre', 'email', 'especialidad', 'documento'];
   }
 
   cargarDocentes(): void {

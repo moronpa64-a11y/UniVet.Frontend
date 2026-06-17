@@ -32,8 +32,9 @@ export class SidebarComponent {
    */
   menuItems: MenuItem[] = [
     { label: 'Inicio', icon: 'dashboard', route: '/inicio', roles: [] },
-    { label: 'Usuarios', icon: 'manage_accounts', route: '/usuarios', roles: ['ADMIN', 'VETERINARIAN'] },
+    { label: 'Usuarios', icon: 'manage_accounts', route: '/usuarios', roles: ['ADMIN'] },
     { label: 'Veterinaria', icon: 'medical_services', route: '/veterinaria', roles: ['ADMIN', 'VETERINARIAN'] },
+    { label: 'Beneficiarios', icon: 'volunteer_activism', route: '/beneficiarios', roles: ['ADMIN', 'TEACHER', 'VETERINARIAN'] },
     { label: 'Docentes', icon: 'school', route: '/docentes', roles: ['ADMIN', 'TEACHER'] },
     { label: 'Estudiantes', icon: 'groups', route: '/estudiantes', roles: ['ADMIN', 'TEACHER'] },
     { label: 'Eventos', icon: 'event_available', route: '/eventos', roles: ['ADMIN', 'TEACHER', 'STUDENT', 'VETERINARIAN'] },

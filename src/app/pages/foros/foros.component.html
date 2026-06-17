@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Foro de Discusión</mat-card-title>
-      <button mat-raised-button color="primary" (click)="abrirNuevoTema()" *ngIf="!mostrarNuevoTema && !temaSeleccionado">
+      <button mat-raised-button color="primary" (click)="abrirNuevoTema()" *ngIf="!mostrarNuevoTema && !temaSeleccionado && isAuthenticated">
         <mat-icon>add</mat-icon> Nuevo Tema
       </button>
     </mat-card-header>
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="nueva-respuesta">
+        <div *ngIf="isAuthenticated" class="nueva-respuesta">
           <h4>Responder</h4>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Tu respuesta</mat-label>
